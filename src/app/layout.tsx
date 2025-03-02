@@ -27,6 +27,14 @@ export const metadata: Metadata = {
 		siteName: "V60 Recipe App",
 		locale: "en_US",
 		type: "website",
+		images: [
+			{
+				url: "/v60-social-cover.jpg",
+				width: 1200,
+				height: 630,
+				alt: "V60 Drip Coffee Setup with Cup",
+			},
+		],
 	},
 	twitter: {
 		card: "summary_large_image",

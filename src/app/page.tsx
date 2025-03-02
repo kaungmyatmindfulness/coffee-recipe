@@ -26,7 +26,6 @@ const RECIPES: Recipe[] = [
 		label: "Hario V60 4:6 Method",
 		description:
 			"The 4:6 method by Tetsu Kasuya divides the brew into two parts: sweetness and strength. Adjust water pours and intervals based on your taste preferences.",
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		steps: ({ coffee, water, ratio }) => {
 			const bloomWater = Math.round(coffee * 2);
 			const sweetnessWater = Math.round((water - bloomWater) * 0.4);
@@ -42,14 +41,12 @@ const RECIPES: Recipe[] = [
 		tips: ({ coffee, water, ratio }) => {
 			const tipsArray: string[] = [];
 
-			// General sweetness/strength suggestions
 			tipsArray.push(
 				"Increase the sweetness phase (e.g. 50-60% of remaining water) to emphasize sweetness.",
 				"Decrease the sweetness phase (30-35%) if you want brighter or more acidic flavors.",
 				"Swirling or stirring lightly after each pour can help with even extraction."
 			);
 
-			// Some dynamic advice based on ratio
 			if (ratio < 15) {
 				tipsArray.push(
 					`Your ratio (1:${ratio}) is quite strong. You might try pouring more water in the sweetness phase to balance potential bitterness.`
@@ -80,7 +77,6 @@ const RECIPES: Recipe[] = [
 				`Total brew time: ~3:00 - 3:30 minutes.`,
 			];
 		},
-		// no dynamic tips for this method
 	},
 	{
 		id: "custom",
