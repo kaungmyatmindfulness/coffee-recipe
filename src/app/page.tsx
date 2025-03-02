@@ -1,101 +1,262 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogTrigger,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogDescription,
+} from "@/components/ui/dialog";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+type Recipe = {
+	id: string;
+	label: string;
+	description: string;
+	steps: (params: { coffee: number; water: number; ratio: number }) => string[];
+	tips?: (params: { coffee: number; water: number; ratio: number }) => string[];
+};
+
+const RECIPES: Recipe[] = [
+	{
+		id: "4-6",
+		label: "Hario V60 4:6 Method",
+		description:
+			"The 4:6 method by Tetsu Kasuya divides the brew into two parts: sweetness and strength. Adjust water pours and intervals based on your taste preferences.",
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		steps: ({ coffee, water, ratio }) => {
+			const bloomWater = Math.round(coffee * 2);
+			const sweetnessWater = Math.round((water - bloomWater) * 0.4);
+			const strengthWater = water - bloomWater - sweetnessWater;
+
+			return [
+				`Bloom: Pour ~${bloomWater}ml water for 30-45 seconds.`,
+				`Sweetness phase: Pour ~${sweetnessWater}ml water, wait ~45-60 seconds.`,
+				`Strength phase: Pour ~${strengthWater}ml water in increments.`,
+				`Total brew time: ~2:30 - 3:00 minutes.`,
+			];
+		},
+		tips: ({ coffee, water, ratio }) => {
+			const tipsArray: string[] = [];
+
+			// General sweetness/strength suggestions
+			tipsArray.push(
+				"Increase the sweetness phase (e.g. 50-60% of remaining water) to emphasize sweetness.",
+				"Decrease the sweetness phase (30-35%) if you want brighter or more acidic flavors.",
+				"Swirling or stirring lightly after each pour can help with even extraction."
+			);
+
+			// Some dynamic advice based on ratio
+			if (ratio < 15) {
+				tipsArray.push(
+					`Your ratio (1:${ratio}) is quite strong. You might try pouring more water in the sweetness phase to balance potential bitterness.`
+				);
+			} else if (ratio > 16) {
+				tipsArray.push(
+					`Your ratio (1:${ratio}) is lighter. Slowing down pours or reducing total sweetness water may help preserve flavor complexity.`
+				);
+			}
+
+			return tipsArray;
+		},
+	},
+	{
+		id: "jeff-hoffmand",
+		label: "Jeff Hoffmand Method",
+		description:
+			"A method focusing on a swirl or agitation technique for even extraction. Specific pours and timings are crucial.",
+		steps: ({ coffee, water, ratio }) => {
+			const bloomWater = Math.round(coffee * 2);
+			const mainPour = Math.round(water * 0.6);
+			const finalPour = water - bloomWater - mainPour;
+
+			return [
+				`Bloom: Pour ~${bloomWater}ml water, swirl gently (30-45s).`,
+				`Main pour: Pour water until ~${mainPour}ml total. Swirl again.`,
+				`Final pour: Add remaining ~${finalPour}ml water. Swirl once more.`,
+				`Total brew time: ~3:00 - 3:30 minutes.`,
+			];
+		},
+		// no dynamic tips for this method
+	},
+	{
+		id: "custom",
+		label: "Custom Drip",
+		description:
+			"A generic drip coffee approach. Feel free to experiment with different ratios and pouring schedules.",
+		steps: ({ coffee, water, ratio }) => {
+			const bloomWater = Math.round(coffee * 2);
+			return [
+				`Bloom: Use ~${bloomWater}ml water, ~30 seconds bloom.`,
+				`Second pour: Add water until about half the total (${Math.round(
+					water / 2
+				)}ml).`,
+				`Third pour: Pour the remaining water. Keep a steady flow.`,
+			];
+		},
+	},
+];
+
+export default function CoffeeRecipesPage() {
+	const [selectedMethod, setSelectedMethod] = useState<string>(RECIPES[0].id);
+	const [coffeeGrams, setCoffeeGrams] = useState<number>(15);
+	const [waterMl, setWaterMl] = useState<number>(240);
+	const [ratio, setRatio] = useState<number>(16);
+
+	const currentRecipe = RECIPES.find((r) => r.id === selectedMethod);
+
+	const handleCoffeeChange = (value: number) => {
+		setCoffeeGrams(value);
+		setWaterMl(Math.round(value * ratio));
+	};
+
+	const handleWaterChange = (value: number) => {
+		setWaterMl(value);
+		setCoffeeGrams(Math.round(value / ratio));
+	};
+
+	const handleRatioChange = (value: number) => {
+		setRatio(value);
+		setWaterMl(Math.round(coffeeGrams * value));
+	};
+
+	return (
+		<div className="mx-auto mt-10 max-w-xl p-4">
+			<h1 className="text-2xl font-bold">Drip Coffee Recipes</h1>
+
+			{/* Brew Method Selector */}
+			<div className="mt-6">
+				<label htmlFor="method" className="block text-sm font-medium">
+					Brew Method
+				</label>
+				<select
+					id="method"
+					className="mt-1 block w-full rounded-md border p-2 text-sm"
+					value={selectedMethod}
+					onChange={(e) => setSelectedMethod(e.target.value)}
+				>
+					{RECIPES.map((recipe) => (
+						<option key={recipe.id} value={recipe.id}>
+							{recipe.label}
+						</option>
+					))}
+				</select>
+			</div>
+
+			{/* Method Description */}
+			{currentRecipe && (
+				<p className="mt-4 text-sm text-gray-600">
+					{currentRecipe.description}
+				</p>
+			)}
+
+			{/* Inputs for coffee / water / ratio */}
+			<div className="mt-6 flex flex-col gap-4">
+				{/* Coffee */}
+				<div>
+					<label htmlFor="coffee" className="block text-sm font-medium">
+						Coffee (grams)
+					</label>
+					<Input
+						id="coffee"
+						type="number"
+						className="mt-1"
+						value={coffeeGrams}
+						onChange={(e) => handleCoffeeChange(Number(e.target.value))}
+					/>
+				</div>
+				{/* Water */}
+				<div>
+					<label htmlFor="water" className="block text-sm font-medium">
+						Water (ml)
+					</label>
+					<Input
+						id="water"
+						type="number"
+						className="mt-1"
+						value={waterMl}
+						onChange={(e) => handleWaterChange(Number(e.target.value))}
+					/>
+				</div>
+				{/* Ratio */}
+				<div>
+					<label htmlFor="ratio" className="block text-sm font-medium">
+						Ratio (1: X)
+					</label>
+					<Input
+						id="ratio"
+						type="number"
+						className="mt-1"
+						value={ratio}
+						onChange={(e) => handleRatioChange(Number(e.target.value))}
+					/>
+				</div>
+			</div>
+
+			{/* Quick summary */}
+			<div className="mt-6 rounded-md border p-4">
+				<p className="text-sm">
+					With <strong>{coffeeGrams}g</strong> of coffee and a ratio of{" "}
+					<strong>1:{ratio}</strong>, you’ll use about{" "}
+					<strong>{waterMl}ml</strong> of water.
+				</p>
+			</div>
+
+			{/* Dialog: Start Brewing -> show dynamic steps & tips */}
+			<div className="mt-6 text-center">
+				<Dialog>
+					<DialogTrigger asChild>
+						<Button>Start Brewing</Button>
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>{currentRecipe?.label} Instructions</DialogTitle>
+							<DialogDescription>
+								Follow these steps carefully to brew.
+							</DialogDescription>
+						</DialogHeader>
+
+						{/* Steps */}
+						{currentRecipe && (
+							<div className="text-sm">
+								<h2 className="mt-2 font-semibold">Steps</h2>
+								<ul className="mt-2 list-disc space-y-2 pl-5">
+									{currentRecipe
+										.steps({
+											coffee: coffeeGrams,
+											water: waterMl,
+											ratio: ratio,
+										})
+										.map((step, i) => (
+											<li key={i}>{step}</li>
+										))}
+								</ul>
+
+								{/* Tips (if present) */}
+								{currentRecipe.tips && (
+									<>
+										<h2 className="mt-6 font-semibold">Tips</h2>
+										<ul className="mt-2 list-disc space-y-2 pl-5">
+											{currentRecipe
+												.tips({
+													coffee: coffeeGrams,
+													water: waterMl,
+													ratio: ratio,
+												})
+												.map((tip, i) => (
+													<li key={i}>{tip}</li>
+												))}
+										</ul>
+									</>
+								)}
+							</div>
+						)}
+					</DialogContent>
+				</Dialog>
+			</div>
+		</div>
+	);
 }
