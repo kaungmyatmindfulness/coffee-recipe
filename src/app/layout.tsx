@@ -1,30 +1,35 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
+import { Lora } from "next/font/google";
+import Link from "next/link";
+import Image from "next/image";
+
+import {
+	NavigationMenu,
+	NavigationMenuItem,
+	NavigationMenuLink,
+	NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+const font = Lora({
 	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
 	title: {
-		default: "V60 Recipe App",
-		template: "%s | V60 Recipe App",
+		default: "Kraft Buddy",
+		template: "%s | Kraft Buddy",
 	},
 	description:
-		"Brew delicious coffee using our V60 Recipe App with dynamic instructions and tips.",
+		"Enhance your coffee experience with Kraft Buddy – your go-to guide for V60 brewing, flavor estimation, and expert coffee tips & tricks.",
 
 	openGraph: {
-		title: "V60 Recipe App",
+		title: "Kraft Buddy",
 		description:
-			"Brew delicious coffee using our V60 method with dynamic instructions and tips.",
-		siteName: "V60 Recipe App",
+			"Kraft Buddy is your coffee companion for V60 recipes, flavor estimation, and expert tips. Perfect your brewing process and explore new coffee tricks for a delicious cup every time.",
+		siteName: "Kraft Buddy",
 		locale: "en_US",
 		type: "website",
 		images: [
@@ -32,35 +37,75 @@ export const metadata: Metadata = {
 				url: "/v60-social-cover.jpg",
 				width: 1200,
 				height: 630,
-				alt: "V60 Drip Coffee Setup with Cup",
+				alt: "Kraft Buddy - V60 Drip Coffee Setup with Cup",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "V60 Recipe App",
+		title: "Kraft Buddy - Brew Coffee Better",
 		description:
-			"Brew delicious coffee using our V60 recipe method. Adjust coffee, ratio, and more.",
-	},
-	icons: {
-		icon: "/favicon.ico",
-	},
-	alternates: {
-		canonical: "https://www.example.com",
+			"Discover V60 brewing, flavor estimations, and coffee tips & tricks with Kraft Buddy – the ultimate coffee companion.",
 	},
 };
 
 export default function RootLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode;
-}>) {
+}) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
+			<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+			<body className={`${font.className} antialiased`}>
+				{/* HEADER */}
+				<header className="w-full border-b bg-white shadow-sm">
+					<nav className="mx-auto flex max-w-6xl items-center justify-between p-4">
+						<h1 className="flex items-center gap-2 text-lg font-bold">
+							<Image
+								src="/favicon.svg"
+								alt="Kraft Buddy Icon"
+								width={24}
+								height={24}
+								className="h-6 w-6"
+							/>
+							Kraft Buddy
+						</h1>
+						<NavigationMenu>
+							<NavigationMenuList>
+								{/* Home nav link */}
+								<NavigationMenuItem>
+									<Link href="/" legacyBehavior passHref>
+										<NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:underline">
+											Home
+										</NavigationMenuLink>
+									</Link>
+								</NavigationMenuItem>
+								{/* Estimator nav link */}
+								<NavigationMenuItem>
+									<Link href="/estimator" legacyBehavior passHref>
+										<NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:underline">
+											Estimator
+										</NavigationMenuLink>
+									</Link>
+								</NavigationMenuItem>
+							</NavigationMenuList>
+						</NavigationMenu>
+					</nav>
+				</header>
+				{/* MAIN CONTENT */}
 				{children}
+
+				{/* FOOTER */}
+				<footer className="border-t py-4 text-center text-sm text-gray-700">
+					<p>
+						© {new Date().getFullYear()} Crafted with{" "}
+						<span className="font-semibold">Love</span>,{" "}
+						<span className="font-semibold">Coffee</span>, and Next.js.
+					</p>
+					<p>All rights reserved.</p>
+				</footer>
 			</body>
 		</html>
 	);
