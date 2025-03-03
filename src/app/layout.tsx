@@ -19,17 +19,17 @@ const font = Lora({
 
 export const metadata: Metadata = {
 	title: {
-		default: "Kraft Buddy",
-		template: "%s | Kraft Buddy",
+		default: "Kraft & Brew Coffee",
+		template: "%s | Kraft & Brew Coffee",
 	},
 	description:
-		"Enhance your coffee experience with Kraft Buddy – your go-to guide for V60 brewing, flavor estimation, and expert coffee tips & tricks.",
+		"Enhance your coffee experience with Kraft & Brew Coffee – your go-to guide for V60 brewing, flavor estimation, and expert coffee tips & tricks.",
 
 	openGraph: {
-		title: "Kraft Buddy",
+		title: "Kraft & Brew Coffee",
 		description:
-			"Kraft Buddy is your coffee companion for V60 recipes, flavor estimation, and expert tips. Perfect your brewing process and explore new coffee tricks for a delicious cup every time.",
-		siteName: "Kraft Buddy",
+			"Kraft & Brew Coffee is your coffee companion for V60 recipes, flavor estimation, and expert tips. Perfect your brewing process and explore new coffee tricks for a delicious cup every time.",
+		siteName: "Kraft & Brew Coffee",
 		locale: "en_US",
 		type: "website",
 		images: [
@@ -37,15 +37,15 @@ export const metadata: Metadata = {
 				url: "/v60-social-cover.jpg",
 				width: 1200,
 				height: 630,
-				alt: "Kraft Buddy - V60 Drip Coffee Setup with Cup",
+				alt: "Kraft & Brew Coffee - V60 Drip Coffee Setup with Cup",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Kraft Buddy - Brew Coffee Better",
+		title: "Kraft & Brew Coffee - Brew Coffee Better",
 		description:
-			"Discover V60 brewing, flavor estimations, and coffee tips & tricks with Kraft Buddy – the ultimate coffee companion.",
+			"Discover V60 brewing, flavor estimations, and coffee tips & tricks with Kraft & Brew Coffee – the ultimate coffee companion.",
 	},
 };
 
@@ -65,12 +65,12 @@ export default function RootLayout({
 						<h1 className="flex items-center gap-2 text-lg font-bold">
 							<Image
 								src="/favicon.svg"
-								alt="Kraft Buddy Icon"
+								alt="Kraft & Brew Coffee Icon"
 								width={24}
 								height={24}
 								className="h-6 w-6"
 							/>
-							Kraft Buddy
+							Kraft & Brew Coffee
 						</h1>
 						<NavigationMenu>
 							<NavigationMenuList>
