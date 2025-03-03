@@ -19,17 +19,17 @@ const font = Lora({
 
 export const metadata: Metadata = {
 	title: {
-		default: "Kraft & Brew Coffee",
-		template: "%s | Kraft & Brew Coffee",
+		default: "Krafty Brew Coffee",
+		template: "%s | Krafty Brew Coffee",
 	},
 	description:
-		"Enhance your coffee experience with Kraft & Brew Coffee – your go-to guide for V60 brewing, flavor estimation, and expert coffee tips & tricks.",
+		"Enhance your coffee experience with Krafty Brew Coffee – your go-to guide for V60 brewing, flavor estimation, and expert coffee tips & tricks.",
 
 	openGraph: {
-		title: "Kraft & Brew Coffee",
+		title: "Krafty Brew Coffee",
 		description:
-			"Kraft & Brew Coffee is your coffee companion for V60 recipes, flavor estimation, and expert tips. Perfect your brewing process and explore new coffee tricks for a delicious cup every time.",
-		siteName: "Kraft & Brew Coffee",
+			"Krafty Brew Coffee is your coffee companion for V60 recipes, flavor estimation, and expert tips. Perfect your brewing process and explore new coffee tricks for a delicious cup every time.",
+		siteName: "Krafty Brew Coffee",
 		locale: "en_US",
 		type: "website",
 		images: [
@@ -37,15 +37,15 @@ export const metadata: Metadata = {
 				url: "/v60-social-cover.jpg",
 				width: 1200,
 				height: 630,
-				alt: "Kraft & Brew Coffee - V60 Drip Coffee Setup with Cup",
+				alt: "Krafty Brew Coffee - V60 Drip Coffee Setup with Cup",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Kraft & Brew Coffee - Brew Coffee Better",
+		title: "Krafty Brew Coffee - Brew Coffee Better",
 		description:
-			"Discover V60 brewing, flavor estimations, and coffee tips & tricks with Kraft & Brew Coffee – the ultimate coffee companion.",
+			"Discover V60 brewing, flavor estimations, and coffee tips & tricks with Krafty Brew Coffee – the ultimate coffee companion.",
 	},
 };
 
@@ -65,12 +65,12 @@ export default function RootLayout({
 						<h1 className="flex items-center gap-2 text-lg font-bold">
 							<Image
 								src="/favicon.svg"
-								alt="Kraft & Brew Coffee Icon"
+								alt="Krafty Brew Coffee Icon"
 								width={24}
 								height={24}
 								className="h-6 w-6"
 							/>
-							Kraft & Brew Coffee
+							Krafty Brew Coffee
 						</h1>
 						<NavigationMenu>
 							<NavigationMenuList>
