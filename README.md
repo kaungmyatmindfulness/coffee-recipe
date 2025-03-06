@@ -1,7 +1,3 @@
-Below is a **README.md** template for your **Kraft Buddy** repository. It provides an overview of the app, installation instructions, features, usage, and more. Customize it to fit your exact setup or preferences.
-
----
-
 # Kraft Buddy
 
 **Kraft Buddy** is a coffee companion app built with **Next.js 13** and **ShadCN UI**. It provides:
