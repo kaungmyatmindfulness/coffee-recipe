@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 
 import { Lora } from "next/font/google";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import Script from "next/script";
+
+import "./globals.css";
 
 import {
 	NavigationMenu,
@@ -10,8 +13,6 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-
-import "./globals.css";
 
 const font = Lora({
 	subsets: ["latin"],
@@ -49,6 +50,8 @@ export const metadata: Metadata = {
 	},
 };
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
 export default function RootLayout({
 	children,
 }: {
@@ -56,6 +59,24 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
+			<head>
+				{/* Google tag (gtag.js) */}
+				<Script
+					strategy="afterInteractive"
+					src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+				/>
+				<Script id="gtag-init" strategy="afterInteractive">
+					{`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GTM_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+				</Script>
+			</head>
+
 			<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
 			<body className={`${font.className} antialiased`}>
