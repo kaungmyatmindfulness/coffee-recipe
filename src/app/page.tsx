@@ -79,8 +79,8 @@ const RECIPES: Recipe[] = [
 		},
 	},
 	{
-		id: "jeff-hoffmand",
-		label: "Jeff Hoffmand Method",
+		id: "james-hoffmann",
+		label: "James Hoffmann Method",
 		description:
 			"A method focusing on swirling or agitation for even extraction. Timings and pours are crucial for optimal flavor.",
 		steps: ({ coffee, water }) => {
